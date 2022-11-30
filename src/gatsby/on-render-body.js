@@ -59,6 +59,10 @@ export default ({ setHeadComponents }, pluginOptions) => {
     agent = proAndSpaAgent;
   }
 
+  const init = `
+  ;window.NREUM||(NREUM={});NREUM.init={distributed_tracing:{enabled:true},privacy:{cookies_enabled:true},ajax:{deny_list:["bam.nr-data.net"]}};
+  `;
+
   const configs = `
     ;NREUM.loader_config={accountID:"${options.accountId}",trustKey:"${options.trustKey}",agentID:"${options.agentID}",licenseKey:"${options.licenseKey}",applicationID:"${options.applicationID}"}
     ;NREUM.info={beacon:"${options.beacon}",errorBeacon:"${options.errorBeacon}",licenseKey:"${options.licenseKey}",applicationID:"${options.applicationID}",sa:1}
@@ -69,7 +73,7 @@ export default ({ setHeadComponents }, pluginOptions) => {
       <script
         key="gatsby-plugin-newrelic"
         dangerouslySetInnerHTML={{
-          __html: agent + configs
+          __html: init + agent + configs
         }}
       />
     ]);
